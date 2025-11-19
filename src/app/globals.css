@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: #050505;
+}
+
+body {
+  color: #e5e5e5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.clock-container {
+  border-radius: 0.75rem;
+  background-color: rgba(10, 10, 10, 0.9);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(113, 113, 122, 0.35) 0, transparent 0);
+  background-size: 14px 14px;
+  box-shadow:
+    0 0 0 1px rgba(24, 24, 27, 0.9),
+    0 18px 45px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(18px);
+}
+
+.clock-container .corner-accent {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(161, 161, 170, 0.85);
+  border-style: solid;
+}
+
+.clock-container .corner-accent.top-0.left-0 {
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.clock-container .corner-accent.top-0.right-0 {
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+
+.clock-container .corner-accent.bottom-0.left-0 {
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+
+.clock-container .corner-accent.bottom-0.right-0 {
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
