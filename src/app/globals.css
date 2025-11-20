@@ -2,56 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  background-color: #050505;
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
 }
 
 body {
-  color: #e5e5e5;
-  -webkit-font-smoothing: antialiased;
+  color: rgb(var(--foreground-rgb));
+  background: radial-gradient(circle at center, #1a1b26 0%, #000000 100%);
+  min-height: 100vh;
+  font-feature-settings: "rlig" 1, "calt" 1;
 }
 
-.clock-container {
-  border-radius: 0.75rem;
-  background-color: rgba(10, 10, 10, 0.9);
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(113, 113, 122, 0.35) 0, transparent 0);
-  background-size: 14px 14px;
-  box-shadow:
-    0 0 0 1px rgba(24, 24, 27, 0.9),
-    0 18px 45px rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(18px);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.clock-container .corner-accent {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-color: rgba(161, 161, 170, 0.85);
-  border-style: solid;
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
-.clock-container .corner-accent.top-0.left-0 {
-  border-top-width: 1px;
-  border-left-width: 1px;
+.animate-fade-in-delay {
+  animation: fadeIn 0.8s ease-out 0.3s forwards;
+  opacity: 0;
 }
-
-.clock-container .corner-accent.top-0.right-0 {
-  border-top-width: 1px;
-  border-right-width: 1px;
-}
-
-.clock-container .corner-accent.bottom-0.left-0 {
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-}
-
-.clock-container .corner-accent.bottom-0.right-0 {
-  border-bottom-width: 1px;
-  border-right-width: 1px;
-}
-
