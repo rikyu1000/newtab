@@ -72,22 +72,7 @@ export default function Calendar() {
       {!token ? (
         <CalendarAuth onSuccess={handleAuthSuccess} />
       ) : (
-        <>
-          {error && <div className="text-red-400 text-sm">{error}</div>}
-          {loading ? (
-            <div className="text-zinc-500 text-sm animate-pulse">
-              Loading...
-            </div>
-          ) : (
-            <EventList events={events} />
-          )}
-          <button
-            onClick={() => token && fetchEvents(token)}
-            className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors"
-          >
-            Refresh
-          </button>
-        </>
+        <EventList events={events} />
       )}
     </div>
   );
