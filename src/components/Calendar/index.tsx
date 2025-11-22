@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Timeline from "./Timeline";
 import CalendarAuth from "./CalendarAuth";
-import EventList from "./EventList";
 
 export default function Calendar() {
   const [token, setToken] = useState<string | null>(null);
   const [events, setEvents] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -27,7 +26,6 @@ export default function Calendar() {
 
   const fetchEvents = async (accessToken: string) => {
     setLoading(true);
-    setError(null);
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date();
@@ -48,7 +46,6 @@ export default function Calendar() {
       }
 
       const data = await response.json();
-      console.log("Calendar Data:", data); // Debug log
       if (data.items) {
         setEvents(data.items);
       } else {
@@ -56,8 +53,6 @@ export default function Calendar() {
       }
     } catch (error) {
       console.error("Failed to fetch events", error);
-      setError(error instanceof Error ? error.message : "Unknown error");
-      // If error is 401, token might be expired
       if (error instanceof Error && error.message.includes("401")) {
         setToken(null);
         localStorage.removeItem("google_access_token");
@@ -67,13 +62,17 @@ export default function Calendar() {
     }
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center w-full min-h-[120px] gap-4 pb-8">
-      {!token ? (
+  if (!token) {
+    return (
+      <div className="w-full flex justify-center pb-12">
         <CalendarAuth onSuccess={handleAuthSuccess} />
-      ) : (
-        <EventList events={events} />
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full h-48 mt-auto">
+      <Timeline events={events} />
     </div>
   );
 }
