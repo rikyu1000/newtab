@@ -80,7 +80,7 @@ export default function Timeline({ events }: TimelineProps) {
               initial={{ opacity: 0, scaleY: 0 }}
               animate={{ opacity: isPast ? 0.4 : 1, scaleY: 1 }}
               transition={{ delay: index * 0.05 }}
-              className={`absolute top-1/2 -translate-y-1/2 h-10 rounded-lg border border-zinc-700/50 bg-zinc-800/80 backdrop-blur-sm overflow-hidden group hover:z-20 hover:border-zinc-500 transition-colors cursor-default`}
+              className={`absolute top-0 bottom-0 rounded-lg border border-zinc-700/50 bg-zinc-800/80 backdrop-blur-sm overflow-hidden group hover:z-20 hover:border-zinc-500 transition-colors cursor-default`}
               style={{
                 left: `${startPercent}%`,
                 width: `${widthPercent}%`,
