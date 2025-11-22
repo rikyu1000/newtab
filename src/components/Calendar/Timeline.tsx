@@ -91,7 +91,7 @@ export default function Timeline({ events }: TimelineProps) {
                 <span className="text-xs text-zinc-200 font-medium truncate block">
                   {event.summary}
                 </span>
-                <span className="text-[10px] text-zinc-500 font-mono truncate opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="text-[10px] text-zinc-400 font-mono truncate mt-1">
                   {start.toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
