@@ -7,6 +7,8 @@ import EventList from "./EventList";
 export default function Calendar() {
   const [token, setToken] = useState<string | null>(null);
   const [events, setEvents] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Restore token from local storage if available (optional, for persistence)
@@ -24,6 +26,8 @@ export default function Calendar() {
   };
 
   const fetchEvents = async (accessToken: string) => {
+    setLoading(true);
+    setError(null);
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date();
@@ -38,26 +42,52 @@ export default function Calendar() {
           },
         }
       );
+
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+      }
+
       const data = await response.json();
+      console.log("Calendar Data:", data); // Debug log
       if (data.items) {
         setEvents(data.items);
+      } else {
+        setEvents([]);
       }
     } catch (error) {
       console.error("Failed to fetch events", error);
+      setError(error instanceof Error ? error.message : "Unknown error");
       // If error is 401, token might be expired
       if (error instanceof Error && error.message.includes("401")) {
         setToken(null);
         localStorage.removeItem("google_access_token");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full mt-8 min-h-[120px]">
+    <div className="flex flex-col items-center justify-center w-full mt-8 min-h-[120px] gap-4">
       {!token ? (
         <CalendarAuth onSuccess={handleAuthSuccess} />
       ) : (
-        <EventList events={events} />
+        <>
+          {error && <div className="text-red-400 text-sm">{error}</div>}
+          {loading ? (
+            <div className="text-zinc-500 text-sm animate-pulse">
+              Loading...
+            </div>
+          ) : (
+            <EventList events={events} />
+          )}
+          <button
+            onClick={() => token && fetchEvents(token)}
+            className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors"
+          >
+            Refresh
+          </button>
+        </>
       )}
     </div>
   );
