@@ -68,7 +68,7 @@ export default function Calendar() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full mt-8 min-h-[120px] gap-4">
+    <div className="flex flex-col items-center justify-center w-full min-h-[120px] gap-4 pb-8">
       {!token ? (
         <CalendarAuth onSuccess={handleAuthSuccess} />
       ) : (
