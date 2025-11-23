@@ -35,7 +35,7 @@ export async function GET(request: Request) {
     };
     return NextResponse.json(
       {
-        error: "Auth Failed v2",
+        error: "Auth Failed v3",
         details: String(error),
         envCheck,
       },
