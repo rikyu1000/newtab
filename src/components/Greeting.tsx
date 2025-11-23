@@ -8,9 +8,9 @@ export default function Greeting() {
   useEffect(() => {
     const updateGreeting = () => {
       const hour = new Date().getHours();
-      if (hour < 12) setGreeting("Good Morning KENTA");
-      else if (hour < 18) setGreeting("Good Afternoon KENTA");
-      else setGreeting("Good Evening KENTA");
+      if (hour < 12) setGreeting("Good Morning KENTA (TEST)");
+      else if (hour < 18) setGreeting("Good Afternoon KENTA (TEST)");
+      else setGreeting("Good Evening KENTA (TEST)");
     };
 
     updateGreeting();
