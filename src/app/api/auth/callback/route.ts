@@ -9,7 +9,7 @@ export async function GET(request: Request) {
   const code = searchParams.get("code");
 
   if (!code) {
-    return NextResponse.json({ error: "No code provided v3" }, { status: 400 });
+    return NextResponse.json({ error: "No code provided" }, { status: 400 });
   }
 
   try {
@@ -26,19 +26,10 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.redirect(new URL("/", request.url));
-  } catch (error: any) {
+  } catch (error) {
     console.error("Auth error:", error);
-    const envCheck = {
-      hasClientId: !!process.env.GOOGLE_CLIENT_ID,
-      hasClientSecret: !!process.env.GOOGLE_CLIENT_SECRET,
-      baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
-    };
     return NextResponse.json(
-      {
-        error: "Auth Failed v3",
-        details: String(error),
-        envCheck,
-      },
+      { error: "Authentication failed" },
       { status: 500 }
     );
   }
