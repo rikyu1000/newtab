@@ -6,9 +6,11 @@ export const getGoogleAuthClient = () => {
     ? baseUrl
     : `https://${baseUrl}`;
 
+  const cleanUrl = urlWithProtocol.replace(/\/$/, "");
+
   return new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    `${urlWithProtocol}/api/auth/callback`
+    `${cleanUrl}/api/auth/callback`
   );
 };
