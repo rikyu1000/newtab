@@ -23,7 +23,58 @@ export default function QuickLinks() {
   const [links, setLinks] = useState<LinkItem[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newTitle, setNewTitle] = useState("");
+  const [newUrl, setNewUrl] = useState("");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("quick_links");
+    if (saved) {
+      setLinks(JSON.parse(saved));
+    } else {
+      setLinks(DEFAULT_LINKS);
+    }
+  }, []);
+
+  const saveLinks = (newLinks: LinkItem[]) => {
+    setLinks(newLinks);
+    localStorage.setItem("quick_links", JSON.stringify(newLinks));
+  };
+
+  const handleLinkClick = (id: string) => {
+    const updated = links.map((link) =>
+      link.id === id ? { ...link, clicks: link.clicks + 1 } : link
+    );
+    // Sort by clicks desc
+    updated.sort((a, b) => b.clicks - a.clicks);
+    saveLinks(updated);
+  };
+
+  const addNewLink = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newTitle || !newUrl) return;
+
+    const newItem: LinkItem = {
+      id: Date.now().toString(),
+      title: newTitle,
+      url: newUrl.startsWith("http") ? newUrl : `https://${newUrl}`,
+      clicks: 0,
+    };
+
+    const updated = [...links, newItem];
+    saveLinks(updated);
+    setNewTitle("");
+    setNewUrl("");
+    setIsAdding(false);
+  };
+
+  const deleteLink = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (confirm("Remove this link?")) {
+      const updated = links.filter((l) => l.id !== id);
+      saveLinks(updated);
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
