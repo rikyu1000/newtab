@@ -41,7 +41,7 @@ export default function Timeline({ events }: TimelineProps) {
         {hourMarkers.map((hour) => (
           <div
             key={hour}
-            className="absolute bottom-0 flex flex-col items-center"
+            className="absolute bottom-0 flex flex-col items-center -translate-x-1/2"
             style={{ left: `${(hour / 24) * 100}%` }}
           >
             <div className="h-2 w-px bg-zinc-700" />
@@ -54,7 +54,7 @@ export default function Timeline({ events }: TimelineProps) {
 
       {/* Current Time Indicator */}
       <div
-        className="absolute top-0 bottom-0 w-px bg-cyan-500 z-10 shadow-[0_0_8px_rgba(6,182,212,0.6)]"
+        className="absolute top-0 bottom-0 w-px bg-cyan-500 z-10 shadow-[0_0_8px_rgba(6,182,212,0.6)] -translate-x-1/2"
         style={{ left: `${currentPosition}%` }}
       >
         <div className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-cyan-500" />
