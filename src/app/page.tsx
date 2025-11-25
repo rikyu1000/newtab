@@ -1,3 +1,6 @@
+import DigitalClock from "@/components/DigitalClock";
+import Greeting from "@/components/Greeting";
+import Calendar from "@/components/Calendar";
 import QuickLinks from "@/components/QuickLinks";
 
 export default function Page() {
