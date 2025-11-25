@@ -102,6 +102,8 @@ export default function QuickLinks() {
           handleLinkClick(link.id);
           window.location.href = link.url;
         }
+      } else if (e.key === "Escape") {
+        setSelectedIndex(null);
       } else {
         // Reset selection on other keys or clicks
         // setSelectedIndex(null);
