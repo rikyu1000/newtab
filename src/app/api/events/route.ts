@@ -18,10 +18,21 @@ export async function GET() {
 
     const calendar = google.calendar({ version: "v3", auth: oauth2Client });
 
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
+    // Calculate start and end of day in JST (Asia/Tokyo)
+    const now = new Date();
+    const jstFormatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Tokyo",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    const parts = jstFormatter.formatToParts(now);
+    const year = parts.find((p) => p.type === "year")?.value;
+    const month = parts.find((p) => p.type === "month")?.value;
+    const day = parts.find((p) => p.type === "day")?.value;
+
+    const startOfDay = new Date(`${year}-${month}-${day}T00:00:00+09:00`);
+    const endOfDay = new Date(`${year}-${month}-${day}T23:59:59.999+09:00`);
 
     const response = await calendar.events.list({
       calendarId: "primary",
