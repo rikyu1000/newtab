@@ -164,7 +164,7 @@ export default function QuickLinks() {
   }, [links, selectedIndex]);
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full max-w-2xl mx-auto mt-8 mb-8 z-10">
+    <div className="flex flex-col items-center gap-4 w-full px-4 md:px-0 max-w-2xl mx-auto mt-8 mb-8 z-10">
       <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
         <AnimatePresence mode="popLayout">
           {links.map((link, index) => (
@@ -225,7 +225,7 @@ export default function QuickLinks() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             onSubmit={addNewLink}
-            className="flex gap-2 items-center bg-zinc-900/50 p-2 rounded-lg border border-zinc-800 backdrop-blur-sm overflow-hidden"
+            className="flex flex-wrap gap-2 items-center bg-zinc-900/50 p-2 rounded-lg border border-zinc-800 backdrop-blur-sm overflow-hidden"
           >
             <input
               type="text"

@@ -19,7 +19,7 @@ export default function Greeting() {
   }, []);
 
   return (
-    <div className="text-2xl font-light text-zinc-400 tracking-widest uppercase animate-fade-in-delay">
+    <div className="text-xl md:text-2xl font-light text-zinc-400 tracking-widest uppercase animate-fade-in-delay">
       {greeting}
     </div>
   );

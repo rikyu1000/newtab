@@ -24,7 +24,7 @@ export default function DigitalClock() {
   }, []);
 
   return (
-    <div className="text-9xl font-bold text-gray-800 dark:text-gray-100">
+    <div className="text-6xl md:text-9xl font-bold text-gray-800 dark:text-gray-100">
       {time}
     </div>
   );
