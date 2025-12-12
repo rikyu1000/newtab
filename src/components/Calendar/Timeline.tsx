@@ -71,8 +71,15 @@ export default function Timeline({ events }: TimelineProps) {
           const startPercent = getDayPercentage(start);
           const endPercent = getDayPercentage(end);
           const widthPercent = Math.max(endPercent - startPercent, 0.5); // Min width
-
           const isPast = end < currentTime;
+
+          const durationMinutes =
+            (end.getTime() - start.getTime()) / (1000 * 60);
+          const isShort = durationMinutes < 45;
+          const isVeryShort = durationMinutes < 30;
+
+          const titleSize = isVeryShort ? "text-[10px]" : "text-xs";
+          const paddingX = isVeryShort ? "px-1" : "px-2";
 
           return (
             <motion.div
@@ -87,21 +94,27 @@ export default function Timeline({ events }: TimelineProps) {
                 minWidth: "4px",
               }}
             >
-              <div className="px-2 py-1 h-full flex flex-col justify-center relative">
-                <span className="text-xs text-zinc-200 font-medium truncate block">
+              <div
+                className={`${paddingX} py-1 h-full flex flex-col justify-center relative`}
+              >
+                <span
+                  className={`${titleSize} text-zinc-200 font-medium truncate block`}
+                >
                   {event.summary}
                 </span>
-                <span className="text-[10px] text-zinc-400 font-mono truncate mt-1">
-                  {start.toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}{" "}
-                  -{" "}
-                  {end.toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </span>
+                {!isShort && (
+                  <span className="text-[10px] text-zinc-400 font-mono truncate mt-1">
+                    {start.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}{" "}
+                    -{" "}
+                    {end.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                )}
 
                 {/* Tooltip */}
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-[200px] bg-zinc-900/95 backdrop-blur-md border border-zinc-700 rounded-md p-2 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
