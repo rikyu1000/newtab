@@ -22,17 +22,33 @@ export default function Timeline({ events }: TimelineProps) {
     return () => clearInterval(timer);
   }, []);
 
-  // Helper to calculate percentage of day (0-100)
+  // Check if there are any events before 7:00
+  const hasEarlyEvents = events.some((event) => {
+    if (!event.start.dateTime) return false;
+    const date = new Date(event.start.dateTime);
+    return date.getHours() < 7;
+  });
+
+  const startHour = hasEarlyEvents ? 0 : 7;
+
+  // Helper to calculate percentage of day (0-100) based on startHour
   const getDayPercentage = (date: Date) => {
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    return ((hours * 60 + minutes) / (24 * 60)) * 100;
+    const totalMinutes = hours * 60 + minutes;
+    const startMinutes = startHour * 60;
+    const dayDurationMinutes = (24 - startHour) * 60;
+
+    return ((totalMinutes - startMinutes) / dayDurationMinutes) * 100;
   };
 
   const currentPosition = getDayPercentage(currentTime);
 
-  // Generate hour markers (every 1 hour)
-  const hourMarkers = Array.from({ length: 25 }, (_, i) => i);
+  // Generate hour markers from startHour to 24
+  const hourMarkers = Array.from(
+    { length: 25 - startHour },
+    (_, i) => i + startHour
+  );
 
   return (
     <div className="w-full h-full relative bg-zinc-900/40 backdrop-blur-md border-t border-zinc-800/50">
@@ -42,7 +58,11 @@ export default function Timeline({ events }: TimelineProps) {
           <div
             key={hour}
             className="absolute bottom-0 flex flex-col items-center -translate-x-1/2"
-            style={{ left: `${(hour / 24) * 100}%` }}
+            style={{
+              left: `${
+                ((hour * 60 - startHour * 60) / ((24 - startHour) * 60)) * 100
+              }%`,
+            }}
           >
             <div className="h-2 w-px bg-zinc-700" />
             <span className="text-[10px] text-zinc-500 mt-1 font-mono">
