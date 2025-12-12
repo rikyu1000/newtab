@@ -17,9 +17,13 @@ export async function GET(request: Request) {
     const { tokens } = await oauth2Client.getToken(code);
 
     if (tokens.refresh_token) {
+      console.log("Setting cookie with NODE_ENV:", process.env.NODE_ENV);
+      const isSecure = process.env.NODE_ENV === "production";
+      console.log("Cookie options - Secure:", isSecure);
+
       cookies().set("google_refresh_token", tokens.refresh_token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: isSecure,
         path: "/",
         maxAge: 60 * 60 * 24 * 365, // 1 year
       });

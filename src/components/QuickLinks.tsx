@@ -14,7 +14,6 @@ const DEFAULT_LINKS: LinkItem[] = [
   { id: "1", title: "Google", url: "https://google.com", clicks: 0 },
   { id: "2", title: "YouTube", url: "https://youtube.com", clicks: 0 },
   { id: "3", title: "X", url: "https://x.com", clicks: 0 },
-  { id: "4", title: "GitHub", url: "https://github.com", clicks: 0 },
   { id: "5", title: "Gmail", url: "https://mail.google.com", clicks: 0 },
   { id: "6", title: "ChatGPT", url: "https://chat.openai.com", clicks: 0 },
 ];
