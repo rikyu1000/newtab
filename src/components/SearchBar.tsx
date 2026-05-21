@@ -9,6 +9,10 @@ export default function SearchBar() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
       const isTyping =
